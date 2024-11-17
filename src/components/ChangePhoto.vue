@@ -55,7 +55,7 @@
 </template>
 
 <script>
-// import firebase from '../firebase';
+import firebase from '../firebase.ts';
 
 export default {
   emits: ['save', 'closeModal'],
@@ -113,7 +113,7 @@ export default {
     },
     addNewPhoto(evt) {
       this.loadImg = true;
-      /*   const uploadTask = firebase
+      const uploadTask = firebase
         .storage()
         .ref(`/${this.id}`)
         .child(this.currentPosition.type.split('Settings')[0])
@@ -136,12 +136,13 @@ export default {
         // 3 При успешном заверщении загрузки
         // Получаем ссылку на загруженый файл.
         () => {
-          uploadTask.snapshot.ref
-            .getDownloadURL()
-            .then((url) => (this.$refs.img.src = url));
+          uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+            console.log('🚀 ~ .then ~ url:', url);
+            this.$refs.img.src = url;
+          });
           this.loadImg = false;
         }
-      ); */
+      );
     },
     deleteImg() {
       const type = this.currentPosition.type.split('Settings')[0];
@@ -153,3 +154,179 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="sass">
+
+$black: #362c36
+$grey: #4d4c59
+$light-grey: #71777d
+// $light-grey: color.adjust($color, $lightness: 10%)
+$light-blue: #a7cbd5
+$white: #f7f6f0
+
+.modal-bg
+  position: absolute
+  top: 0
+  left: 0
+  height: 100%
+  width: 100%
+  background-color: #0000006e
+
+
+
+.edit
+  &__bg
+    width: 45rem
+    & div.modal
+      &-content
+        height: 20rem
+
+        &__photo
+          height: 16rem
+
+          & div.modal-content__photo__bg:after
+              width: 20rem
+              height: 20rem
+              border-radius: 12rem
+              box-shadow: 0 0 0 26rem rgba(0, 0, 0, .48627450980392156)
+
+
+          &__bg
+            height: 15rem
+            &::after
+              width: 40rem
+              height: 10rem
+              box-shadow: 0px 0px 0px 5rem #0000007c
+          &__wrap
+            width: 40rem
+            height: 10rem
+  &__photo
+    width: 27rem
+    & div.modal
+      &-content
+        height: 27rem
+        &__photo
+          height: 23rem
+          &__bg
+            height: 23rem
+            &::after
+              width: 20rem
+              height: 20rem
+              border-radius: 12rem
+              box-shadow: 0px 0px 0px 26rem #0000007c
+          &__wrap
+            width: 20rem
+            height: 20rem
+
+.modal
+  height: fit-content
+  background-color: $white
+  border-radius: 0.5rem
+  &-header
+    display: flex
+    justify-content: space-between
+    padding: 0.5rem
+    font-size: 1.2rem
+    & span
+      padding: 0.2rem 0.5rem
+    & span:last-child
+      padding: 0.3rem 0.5rem
+      cursor: pointer
+      font-size: 1rem
+      border: 1px solid $black
+      border-radius: 0.5rem
+      opacity: 0.5
+      &:hover
+        opacity: 1
+        border-color: $light-blue
+        color: $light-blue
+        // color: darken($light-blue, 10%)
+  &-content
+    background-color: #000
+    &__photo
+      position: relative
+      overflow: hidden
+      height: 400px
+      &__bg
+        position: relative
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 100%
+        height: 100%
+        &::after
+          position: absolute
+          content: ''
+          pointer-events: none
+          border: 2px solid $white
+      &__wrap
+        position: relative
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 300px
+        height: 300px
+        & img
+          position: absolute
+          display: block
+          cursor: move
+          width: 100%
+          // height: 100%
+    &__tools
+      width: stretch
+      padding: 0 1rem
+      & p
+        margin: 0
+        padding: 0.2rem 0.5rem
+        font-size: 1rem
+        color: $white
+        text-align: center
+      & input
+        width: stretch
+        background-color: #fff
+  &-btn
+    display: flex
+    justify-content: space-between
+    padding: 1rem
+    & button
+      cursor: pointer
+      font-size: 1rem
+      outline: none
+      padding: 0.2rem 0.5rem
+      border-radius: 0.5rem
+    &__delete
+      opacity: 0.6
+      border: none
+      &:hover
+        opacity: 0.7
+        background-color: #7474749a
+    & div
+      & button:first-child
+        position: relative
+        margin-right: 0.5rem
+        color: $black
+        border: 1px solid $black
+        & input
+          position: absolute
+          opacity: 0
+          left: 0
+          width: 100%
+      & button:last-child
+        // color: color.adjust($light-blue, -25%)
+        color: $light-blue
+        // border: 1px solid color.adjust($light-blue, -25%)
+        border: 1px solid $black
+
+.progress
+  position: absolute
+  width: stretch
+  height: 100%
+  display: flex
+  align-items: center
+  justify-content: center
+  background-color: #00000086
+  & progress
+    width: stretch
+    max-width: 20rem
+    height: 1.5rem
+</style>
