@@ -1,122 +1,124 @@
+Результат
 <template>
-  <div class="match-result-card">
-    <div class="background">
-      <!-- Background Image -->
-    </div>
-    <div class="overlay">
-      <h1 class="result-text">ПРОИГРЫШ</h1>
-      <div class="teams">
-        <div class="team-info">
-          <img
-            :src="homeTeamLogo"
-            alt="Логотип домашней команды"
-            class="team-logo"
-          />
-          <p class="team-name">{{ homeTeamName }}</p>
-          <p class="team-location">{{ homeTeamLocation }}</p>
-        </div>
-        <div class="score">
-          <h2>{{ homeScore }} : {{ awayScore }}</h2>
-          <p>Матч завершен</p>
-          <p class="time">42'</p>
-        </div>
-        <div class="team-info">
-          <img
-            :src="awayTeamLogo"
-            alt="Логотип гостевой команды"
-            class="team-logo"
-          />
-          <p class="team-name">{{ awayTeamName }}</p>
-          <p class="team-location">{{ awayTeamLocation }}</p>
-        </div>
+  <div class="scoreboard">
+    <h1 class="status">ПРОИГРЫШ</h1>
+    <div class="match-info">
+      <div class="team">
+        <img :src="teamA.logo" alt="Team A Logo" class="team-logo" />
+        <p class="team-name">{{ teamA.name }}</p>
       </div>
+      <div class="score">
+        <p class="score-number">{{ teamA.score }}:{{ teamB.score }}</p>
+        <p class="match-end">Матч завершен</p>
+      </div>
+      <div class="team">
+        <img :src="teamB.logo" alt="Team B Logo" class="team-logo" />
+        <p class="team-name">{{ teamB.name }}</p>
+      </div>
+    </div>
+    <div class="events">
+      <table>
+        <thead>
+          <tr>
+            <th>Время</th>
+            <th>Команда</th>
+            <th>Событие</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(event, index) in events" :key="index">
+            <td>{{ event.time }}</td>
+            <td>{{ event.team }}</td>
+            <td>{{ event.action }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MatchResultCard',
-  props: {
-    homeTeamLogo: String,
-    homeTeamName: String,
-    homeTeamLocation: String,
-    homeScore: Number,
-    awayTeamLogo: String,
-    awayTeamName: String,
-    awayTeamLocation: String,
-    awayScore: Number,
+  data() {
+    return {
+      teamA: {
+        name: 'Ока Навашино',
+        logo: 'oka-logo.png',
+        score: 1,
+      },
+      teamB: {
+        name: 'Vozwooden Вознесенское',
+        logo: 'vozwooden-logo.png',
+        score: 0,
+      },
+      events: [{ time: "42'", team: 'Ока Навашино', action: 'Гол' }],
+    };
   },
 };
 </script>
 
 <style scoped>
-.match-result-card {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  color: white;
-  font-family: Arial, sans-serif;
-}
-
-.background {
-  background-image: url('/path/to/your/background-image.jpg');
-  background-size: cover;
-  background-position: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-  filter: brightness(0.7);
-}
-
-.overlay {
-  position: relative;
-  padding: 20px;
+.scoreboard {
   text-align: center;
+  font-family: Arial, sans-serif;
+  margin: 20px auto;
 }
 
-.result-text {
+.status {
   font-size: 2em;
-  font-weight: bold;
+  color: #d32f2f;
   margin-bottom: 20px;
 }
 
-.teams {
+.match-info {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+  margin-bottom: 20px;
 }
 
-.team-info {
+.team {
   text-align: center;
 }
 
 .team-logo {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 10px;
+  width: 100px;
+  height: auto;
 }
 
 .team-name {
   font-size: 1.2em;
-}
-
-.team-location {
-  font-size: 0.9em;
-  color: #ccc;
+  margin-top: 10px;
 }
 
 .score {
-  font-size: 2em;
-  font-weight: bold;
+  text-align: center;
 }
 
-.time {
-  font-size: 0.9em;
-  color: #ccc;
+.score-number {
+  font-size: 3em;
+  margin: 0;
+}
+
+.match-end {
+  color: #ff9800;
+  font-size: 1.2em;
+}
+
+.events table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.events th,
+.events td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.events th {
+  background-color: #f4f4f4;
 }
 </style>

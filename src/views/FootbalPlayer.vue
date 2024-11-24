@@ -13,13 +13,13 @@
         <div class="card-content">
           <button
             v-if="!isEditText"
-            class="card__edit-btn"
+            class="card__edit-btn edit-button"
             @click="isEditText = true"
           />
 
           <button
             v-else
-            class="card__edit-btn card__edit-btn--input"
+            class="card__edit-btn edit-button--input edit-button"
             @click="isEditText = false"
           />
 
@@ -127,36 +127,12 @@ const savePhotoSettings = (type, settings) => {
     align-items: center;
     justify-content: flex-end;
     gap: 16px;
-    // position: relative;
   }
 
   &__edit-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 28px;
-    background-image: url('./../assets/icons/edit.svg');
-    background-size: 16px;
-    background-position: center;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border-radius: 4px;
-    cursor: pointer;
-    opacity: 0.4;
-    transition: 0.3s opacity;
     position: absolute;
     right: 13px;
     top: 14px;
-
-    &:hover {
-      opacity: 1;
-      transition: 0.3s opacity;
-    }
-
-    &--input {
-      background-image: url('./../assets/icons/check.svg');
-    }
   }
 
   &__title {

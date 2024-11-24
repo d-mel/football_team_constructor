@@ -124,10 +124,8 @@ export default createStore({
   },
   actions: {
     changeTeamInfo(state, payload) {
-      console.log('🚀 ~ changeUserInfo ~ payload:', payload);
       //* Сохранение данных на сервер
-      // TODO сделать сохранение не только для учителя
-      return userDB.set({ couch: payload.data }, { merge: true });
+      return userDB.set(payload.data, { merge: true });
     },
   },
   mutations: {

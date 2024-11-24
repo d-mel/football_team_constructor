@@ -11,6 +11,8 @@ export type TeamInfoType = {
   };
   logo: {
     id: string;
+    name: string;
+    city: string;
     photoSettings: {
       left: number;
       src: string;

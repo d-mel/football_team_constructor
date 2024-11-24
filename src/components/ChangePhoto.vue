@@ -61,7 +61,7 @@ export default {
   emits: ['save', 'closeModal'],
   props: {
     currentPosition: Object,
-    id: String,
+    id: String | Number,
   },
   data() {
     return {
@@ -137,7 +137,6 @@ export default {
         // Получаем ссылку на загруженый файл.
         () => {
           uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-            console.log('🚀 ~ .then ~ url:', url);
             this.$refs.img.src = url;
           });
           this.loadImg = false;
@@ -168,9 +167,10 @@ $white: #f7f6f0
   position: absolute
   top: 0
   left: 0
-  height: 100%
+  height: 100vh
   width: 100%
   background-color: #0000006e
+  z-index: 9
 
 
 

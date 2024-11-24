@@ -24,3 +24,29 @@
 body {
   font-family: 'Montserrat', sans-serif;
 }
+
+.edit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 28px;
+  background-image: url('./../icons/edit.svg');
+  background-size: 16px;
+  background-position: center;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.4;
+  transition: 0.3s opacity;
+
+  &:hover {
+    opacity: 1;
+    transition: 0.3s opacity;
+  }
+
+  &--input {
+    background-image: url('./../icons/check.svg');
+  }
+}
