@@ -5,7 +5,6 @@ import FinalCount from './views/FinalCount.vue';
 import FootbalPlayer from './views/FootbalPlayer.vue';
 import { computed, ref } from 'vue';
 import html2canvas from 'html2canvas';
-import screenshot, { download } from 'image-screenshot';
 
 const tabs = computed(() => [
   {
@@ -38,25 +37,13 @@ const dataURItoBlob = (dataURI: string) => {
   return new Blob([ab], { type: 'image/jpeg' });
 };
 
-// async function preloadImages() {
-//   const images = document.querySelectorAll('img');
-//   console.log('🚀 ~ preloadImages ~ images:', images);
-//   const promises = Array.from(images).map((img) => {
-//     return new Promise((resolve, reject) => {
-//       img.onload = resolve;
-//       img.onerror = reject;
-//     });
-//   });
-//   await Promise.all(promises);
-// }
-
 // TODO сделать скачивание для остальных разделов
 const download = () => {
-  const slideContainer = document.querySelector('.main-team');
-  slideContainer.classList.add('download');
-  console.log('🚀 ~ download ~ slideContainer:', slideContainer);
-  if (slideContainer) {
-    html2canvas(slideContainer, {
+  const imgContainer = document.querySelector('.main-team');
+  imgContainer.classList.add('download');
+  console.log('🚀 ~ download ~ imgContainer:', imgContainer);
+  if (imgContainer) {
+    html2canvas(imgContainer as HTMLElement, {
       windowWidth: 1600,
       windowHeight: 960,
       width: 1600,
@@ -71,7 +58,7 @@ const download = () => {
       docUrl.setAttribute('download', 'pres.jpg');
       document.body.appendChild(docUrl);
       docUrl.click();
-      slideContainer.classList.remove('download');
+      imgContainer.classList.remove('download');
     });
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="teamInfo" class="main-team">
+  <div v-if="!isLoading" class="main-team">
     <button v-if="!isEditText" class="edit-button" @click="isEditText = true" />
 
     <button
@@ -198,7 +198,7 @@
     :id="idPhoto"
     :current-position="computedImgSettings"
     @close-modal="isVisibleModal = false"
-    @save="(type, setting) => savePhotoSettings(type, setting)"
+    @save="(_, setting) => savePhotoSettings(setting)"
   />
 </template>
 
@@ -248,9 +248,9 @@ const imgDefaultSettings = {
 
 const isEditText = ref(false);
 
-const teamInfo = ref<TeamInfoType>();
+const teamInfo = ref<TeamInfoType['data']>();
 
-const savePhotoSettings = (type, settings) => {
+const savePhotoSettings = (settings) => {
   if (typeof idPhoto.value === 'number') {
     const player = teamInfo.value?.team.find(
       (player) => player.id === idPhoto.value
@@ -260,9 +260,11 @@ const savePhotoSettings = (type, settings) => {
     Object.assign(teamInfo.value[idPhoto.value]?.photoSettings, settings);
   }
 
-  store.dispatch('changeTeamInfo', { type, data: teamInfo.value }).then(() => {
+  store.dispatch('changeTeamInfo', teamInfo.value).then(() => {
     store.dispatch('getTeamInfo').then((data) => {
-      teamInfo.value = data;
+      teamInfo.value = data.data;
+      console.log('🚀 ~ savePhotoSettings:', teamInfo.value);
+
       isVisibleModal.value = false;
     });
   });
@@ -270,19 +272,24 @@ const savePhotoSettings = (type, settings) => {
   isVisibleModal.value = false;
 };
 
+const isLoading = ref(true);
+
 const saveEditedText = () => {
-  store.dispatch('changeTeamInfo', { data: teamInfo.value }).then(() => {
+  store.dispatch('changeTeamInfo', teamInfo.value).then(() => {
     store.dispatch('getTeamInfo').then((data) => {
-      teamInfo.value = data;
+      console.log('🚀 ~ saveEditedText:', teamInfo.value);
+      teamInfo.value = data.data;
       isEditText.value = false;
     });
   });
 };
 
-onMounted(async () => {
+onMounted(() => {
   store.dispatch('getTeamInfo').then((data: TeamInfoType) => {
-    store.commit('setTeamInfo', data);
-    teamInfo.value = data;
+    console.log('🚀 ~ store.dispatch ~ data:', data);
+    store.commit('setTeamInfo', data.data);
+    teamInfo.value = data.data;
+    isLoading.value = false;
   });
 });
 </script>

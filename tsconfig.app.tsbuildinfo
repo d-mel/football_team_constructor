@@ -1,1 +1,1 @@
-{"root":["./src/main.ts","./src/vite-env.d.ts","./src/App.vue","./src/components/ChangePhoto.vue"],"version":"5.6.3"}
+{"root":["./src/firebase.ts","./src/main.ts","./src/vite-env.d.ts","./src/store/index.ts","./src/store/modules/photo.ts","./src/store/modules/team.ts","./src/types/teamInfo.ts","./src/App.vue","./src/components/ChangePhoto.vue","./src/views/FinalCount.vue","./src/views/FootbalPlayer.vue","./src/views/MainTeam.vue","./src/views/TableTeams.vue"],"version":"5.6.3"}

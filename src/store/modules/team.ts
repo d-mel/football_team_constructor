@@ -1,5 +1,4 @@
 import firebase from './../../firebase';
-export type { TeamInfo } from './../types/teamInfo.ts';
 
 export default {
   namespaced: false,
